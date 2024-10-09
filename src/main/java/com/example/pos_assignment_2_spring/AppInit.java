@@ -1,4 +1,20 @@
 package com.example.pos_assignment_2_spring;
 
-public class AppInit {
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class[0];
+    }
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class[0];
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[0];
+    }
 }
