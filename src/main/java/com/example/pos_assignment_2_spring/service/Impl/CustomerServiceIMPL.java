@@ -60,4 +60,16 @@ public class CustomerServiceIMPL implements CustomerService {
         List<CustomerEntity> allUsers = customerDao.findAll();
         return mapping.asCustomerDTOList(allUsers);
     }
+
+    @Override
+    public void updateCustomer(String customerId, CustomerDTO customerDTO) {
+        Optional<CustomerEntity> tmpCustomer = customerDao.findById(customerId);
+        if(!tmpCustomer.isPresent()){
+            throw new CustomerNotFoundException("Customer ID With" + customerId + "Not Found");
+        }else{
+            tmpCustomer.get().setCustomerName(customerDTO.getCustomerName());
+            tmpCustomer.get().setCustomerAddress(customerDTO.getCustomerAddress());
+            tmpCustomer.get().setCustomerTel(customerDTO.getCustomerTel());
+        }
+    }
 }

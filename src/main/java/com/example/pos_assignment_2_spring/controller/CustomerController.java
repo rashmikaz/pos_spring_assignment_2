@@ -78,5 +78,25 @@ public class CustomerController {
         return customerService.getAllCustomer();
     }
 
+    @PutMapping(value = "/{customerId}")
+    public ResponseEntity<Void> updateCustomer(@PathVariable ("customerId") String customerId,
+                                               @RequestBody CustomerDTO customerDTO){
+
+        try {
+            if(!RegexProcess.customerIdMatcher(customerId) || customerDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.updateCustomer(customerId,customerDTO);
+            logger.info("Customer Update successful");
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (CustomerNotFoundException e){
+            logger.warn("Returning Http 400 Bad Request",e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            logger.error("Customer update unsuccessful",e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
 
