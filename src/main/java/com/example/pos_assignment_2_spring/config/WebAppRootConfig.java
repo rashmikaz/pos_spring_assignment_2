@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "com.example.pos_assignment_2_spring")
-@EnableJpaRepositories()
+@EnableJpaRepositories(basePackages = "com.example.pos_assignment_2_spring.dao")
 @EnableTransactionManagement
 public class WebAppRootConfig {
 
@@ -46,7 +46,7 @@ public class WebAppRootConfig {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(vendorAdapter);
-        factory.setPackagesToScan("com.example.notecollecter.entity.Impl");
+        factory.setPackagesToScan("com.example.pos_assignment_2_spring.entity.Impl");
         factory.setDataSource(dataSource());
         return factory;
     }

@@ -2,6 +2,8 @@ package com.example.pos_assignment_2_spring;
 
 import com.example.pos_assignment_2_spring.config.WebAppConfig;
 import com.example.pos_assignment_2_spring.config.WebAppRootConfig;
+import jakarta.servlet.MultipartConfigElement;
+import jakarta.servlet.ServletRegistration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInit extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -18,5 +20,10 @@ public class AppInit extends AbstractAnnotationConfigDispatcherServletInitialize
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration){
+        registration.setMultipartConfig(new MultipartConfigElement("/tmp"));
     }
 }

@@ -2,6 +2,7 @@ package com.example.pos_assignment_2_spring.controller;
 
 
 import com.example.pos_assignment_2_spring.dto.Impl.CustomerDTO;
+import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,11 @@ public class CustomerController {
         try {
             customerService.saveCustomer(customerDTO);
             return new ResponseEntity<>(HttpStatus.CREATED);
-//        }catch (DataPersistException e){
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (DataPersistException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         }
