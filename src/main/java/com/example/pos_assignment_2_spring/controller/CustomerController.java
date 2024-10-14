@@ -4,8 +4,10 @@ package com.example.pos_assignment_2_spring.controller;
 import com.example.pos_assignment_2_spring.CustomerStatusCode.SelectedErrorStatus;
 import com.example.pos_assignment_2_spring.dto.CustomerStatus;
 import com.example.pos_assignment_2_spring.dto.Impl.CustomerDTO;
+import com.example.pos_assignment_2_spring.exception.CustomerNotFoundException;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.CustomerService;
+import com.example.pos_assignment_2_spring.utill.RegexProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,10 +44,31 @@ public class CustomerController {
     }
 
     @GetMapping(value = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CustomerStatus getSelectedCustomer(@PathVariable ("customerId") String userId){
-        return customerService.getCustomer(userId);
+    public CustomerStatus getSelectedCustomer(@PathVariable ("customerId") String customerId){
+        if(!RegexProcess.customerIdMatcher(customerId)){
+            logger.error("Returning Http 400 Bad Request");
+            return new SelectedErrorStatus(1,"Customer ID is not valid");
+        }
+        return customerService.getCustomer(customerId);
     }
 
+
+    @DeleteMapping(value = "/{customerId}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable("customerId") String customerId) {
+        try {
+            if (!RegexProcess.customerIdMatcher(customerId)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            customerService.deleteCustomer(customerId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (CustomerNotFoundException e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }
 
