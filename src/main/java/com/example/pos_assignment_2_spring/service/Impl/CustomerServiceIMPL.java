@@ -13,7 +13,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.undo.CannotUndoException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -53,5 +53,11 @@ public class CustomerServiceIMPL implements CustomerService {
         }else {
             customerDao.deleteById(customerId);
         }
+    }
+
+    @Override
+    public List<CustomerDTO> getAllCustomer() {
+        List<CustomerEntity> allUsers = customerDao.findAll();
+        return mapping.asCustomerDTOList(allUsers);
     }
 }
