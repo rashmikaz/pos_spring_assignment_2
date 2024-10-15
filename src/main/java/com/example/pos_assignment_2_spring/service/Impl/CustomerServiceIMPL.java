@@ -39,7 +39,7 @@ public class CustomerServiceIMPL implements CustomerService {
     public CustomerStatus getCustomer(String customerId) {
         if(customerDao.existsById(customerId)){
             CustomerEntity selectedCustomer = customerDao.getReferenceById(customerId);
-            return (CustomerStatus) mapping.toCustomerDto(selectedCustomer);//have some error
+            return  mapping.toCustomerDto(selectedCustomer);//have some error
         }else {
             return new SelectedErrorStatus(2, "customer with id " + customerId + " not found");
         }
@@ -57,8 +57,8 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public List<CustomerDTO> getAllCustomer() {
-        List<CustomerEntity> allUsers = customerDao.findAll();
-        return mapping.asCustomerDTOList(allUsers);
+        List<CustomerEntity> allcustomer = customerDao.findAll();
+        return mapping.asCustomerDTOList(allcustomer);
     }
 
     @Override
