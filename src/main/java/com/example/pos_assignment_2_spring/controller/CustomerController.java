@@ -20,13 +20,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/V1/customer")
+@CrossOrigin
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
     private static Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCustomer(@RequestBody CustomerDTO customerDTO) {
         try {

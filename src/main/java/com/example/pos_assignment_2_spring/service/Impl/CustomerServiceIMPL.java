@@ -8,6 +8,7 @@ import com.example.pos_assignment_2_spring.entity.Impl.CustomerEntity;
 import com.example.pos_assignment_2_spring.exception.CustomerNotFoundException;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.CustomerService;
+import com.example.pos_assignment_2_spring.utill.AppUtill;
 import com.example.pos_assignment_2_spring.utill.Mapping;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class CustomerServiceIMPL implements CustomerService {
 
     @Override
     public void saveCustomer(CustomerDTO customerDTO){
-//        customerDTO.setCustomerId(AppUtill.generateCustomerId());
+        customerDTO.setCustomerId(AppUtill.generateCustomerId());
         CustomerEntity saveCustomer = customerDao.save(mapping.toCustomerEntity(customerDTO));
         if(saveCustomer == null){
             throw new DataPersistException("Customer not saved");

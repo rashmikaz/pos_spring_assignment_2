@@ -3,6 +3,7 @@ package com.example.pos_assignment_2_spring.controller;
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.ItemService;
+import com.example.pos_assignment_2_spring.utill.RegexProcess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,30 @@ public class ItemController {
         }
 
         }
+
+        @PutMapping(value = "/{itemId}")
+        public ResponseEntity<Void>updateItem(@PathVariable ("itemId") String itemId,
+                                              @RequestBody ItemDTO itemDTO) {
+
+            try {
+                if (!RegexProcess.customerIdMatcher(itemId) || itemDTO == null) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                itemService.updateItem(itemId, itemDTO);
+                logger.info("Item Updated!!");
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            } catch (DataPersistException e) {
+                e.printStackTrace();
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error("Item Not Updated!!", e.getMessage());
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }
+
+
+
 
 
 
