@@ -3,8 +3,12 @@ package com.example.pos_assignment_2_spring.utill;
 import com.example.pos_assignment_2_spring.dao.ItemDao;
 import com.example.pos_assignment_2_spring.dto.Impl.CustomerDTO;
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
+import com.example.pos_assignment_2_spring.dto.Impl.OrderDTO;
+import com.example.pos_assignment_2_spring.dto.Impl.OrderDetailsDTO;
 import com.example.pos_assignment_2_spring.entity.Impl.CustomerEntity;
 import com.example.pos_assignment_2_spring.entity.Impl.ItemEntity;
+import com.example.pos_assignment_2_spring.entity.Impl.OrderDetailsEntity;
+import com.example.pos_assignment_2_spring.entity.Impl.OrderEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +49,20 @@ public class Mapping {
 
     public List<ItemDTO> asItemDTOList(List<ItemEntity> itemEntityList){
         return modelMapper.map(itemEntityList, new TypeToken<List<ItemDTO>>() {}.getType());
+    }
+
+    //For order
+    public OrderEntity toOrderEntity(OrderDTO orderDTO){
+        return modelMapper.map(orderDTO, OrderEntity.class);
+    }
+
+    //For Order Details
+    public OrderDetailsEntity toOrderDetailsEntity(OrderDetailsDTO orderDetailsDTO){
+        return modelMapper.map(orderDetailsDTO,OrderDetailsEntity.class);
+    }
+
+    public List<OrderDetailsDTO> asOrderDetailsDTOList(List<OrderDetailsEntity> orderDetailsEntities){
+        return modelMapper.map(orderDetailsEntities,new TypeToken<List<OrderDetailsDTO>>() {}.getType());
     }
 
 }
