@@ -1,6 +1,9 @@
 package com.example.pos_assignment_2_spring.controller;
 
+import com.example.pos_assignment_2_spring.CustomerStatusCode.SelectedErrorStatus;
+import com.example.pos_assignment_2_spring.dto.CustomerStatus;
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
+import com.example.pos_assignment_2_spring.dto.ItemStatus;
 import com.example.pos_assignment_2_spring.exception.CustomerNotFoundException;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.ItemService;
@@ -82,6 +85,17 @@ public class ItemController {
          }
 
 
+         @GetMapping(value = "/{itemId}",produces = MediaType.APPLICATION_JSON_VALUE)
+         public ItemStatus getSelectedItem(@PathVariable("itemId")String itemId){
+
+             if(!RegexProcess.customerIdMatcher(itemId)){
+                 logger.error("Returning Http 400 Bad Request");
+                 return new SelectedErrorStatus(1,"Item ID is not valid");
+             }
+             return itemService.getItem(itemId);
+
+
+         }
 
 
 

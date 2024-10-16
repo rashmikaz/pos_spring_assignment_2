@@ -1,7 +1,9 @@
 package com.example.pos_assignment_2_spring.service.Impl;
 
+import com.example.pos_assignment_2_spring.CustomerStatusCode.SelectedErrorStatus;
 import com.example.pos_assignment_2_spring.dao.ItemDao;
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
+import com.example.pos_assignment_2_spring.dto.ItemStatus;
 import com.example.pos_assignment_2_spring.entity.Impl.ItemEntity;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.exception.ItemNotFoundException;
@@ -52,6 +54,16 @@ public class ItemServiceIMPL implements ItemService {
             throw new ItemNotFoundException("Item ID With" + itemId + "Not Found");
         }else{
             itemDao.deleteById(itemId);
+        }
+    }
+    @Override
+    public ItemStatus getItem(String itemId) {
+        if(itemDao.existsById(itemId)){
+            ItemEntity selectedItem = itemDao.getReferenceById(itemId);
+            return mapping.toItemDto(selectedItem);
+        }else {
+            return new SelectedErrorStatus(2,"Item Code With" + itemId
+                    + "Not Found");
         }
     }
 
