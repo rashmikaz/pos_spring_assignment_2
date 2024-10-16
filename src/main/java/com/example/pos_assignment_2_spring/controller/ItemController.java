@@ -2,6 +2,7 @@ package com.example.pos_assignment_2_spring.controller;
 
 import com.example.pos_assignment_2_spring.CustomerStatusCode.SelectedErrorStatus;
 import com.example.pos_assignment_2_spring.dto.CustomerStatus;
+import com.example.pos_assignment_2_spring.dto.Impl.CustomerDTO;
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
 import com.example.pos_assignment_2_spring.dto.ItemStatus;
 import com.example.pos_assignment_2_spring.exception.CustomerNotFoundException;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/V1/item")
@@ -66,7 +69,6 @@ public class ItemController {
             }
         }
 
-
          @DeleteMapping(value = "/{itemId}")
          public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String itemId){
              try {
@@ -97,13 +99,11 @@ public class ItemController {
 
          }
 
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<ItemDTO> getAllItem(){
 
-
-
-
-
-
-
+        return itemService.getAllItem();
+    }
 
 
 

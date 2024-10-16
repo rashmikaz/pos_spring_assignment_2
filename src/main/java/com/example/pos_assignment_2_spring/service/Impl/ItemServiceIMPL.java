@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,6 +66,12 @@ public class ItemServiceIMPL implements ItemService {
             return new SelectedErrorStatus(2,"Item Code With" + itemId
                     + "Not Found");
         }
+    }
+
+    @Override
+    public List<ItemDTO> getAllItem() {
+        List<ItemEntity> allItems = itemDao.findAll();
+        return mapping.asItemDTOList(allItems);
     }
 
 }
