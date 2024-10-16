@@ -1,6 +1,7 @@
 package com.example.pos_assignment_2_spring.controller;
 
 import com.example.pos_assignment_2_spring.dto.Impl.ItemDTO;
+import com.example.pos_assignment_2_spring.exception.CustomerNotFoundException;
 import com.example.pos_assignment_2_spring.exception.DataPersistException;
 import com.example.pos_assignment_2_spring.service.ItemService;
 import com.example.pos_assignment_2_spring.utill.RegexProcess;
@@ -45,7 +46,7 @@ public class ItemController {
                                               @RequestBody ItemDTO itemDTO) {
 
             try {
-                if (!RegexProcess.customerIdMatcher(itemId) || itemDTO == null) {
+                if (!RegexProcess.itemCodeMatcher(itemId) || itemDTO == null) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
                 itemService.updateItem(itemId, itemDTO);
@@ -58,8 +59,34 @@ public class ItemController {
                 e.printStackTrace();
                 logger.error("Item Not Updated!!", e.getMessage());
                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
             }
         }
+
+
+         @DeleteMapping(value = "/{itemId}")
+         public ResponseEntity<Void> deleteItem(@PathVariable("itemId") String itemId){
+             try {
+                 if(!RegexProcess.itemCodeMatcher(itemId)){
+                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                 }
+                 itemService.deleteItem(itemId);
+                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+             } catch (CustomerNotFoundException e) {
+                 e.printStackTrace();
+                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+             } catch (Exception e) {
+                 e.printStackTrace();
+                 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+             }
+         }
+
+
+
+
+
+
+
 
 
 
