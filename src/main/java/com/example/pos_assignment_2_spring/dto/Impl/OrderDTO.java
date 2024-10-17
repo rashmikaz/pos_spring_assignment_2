@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,5 +15,5 @@ public class OrderDTO implements OrderStatus {
     private String orderId;
     private String customerId;
     private LocalDate orderDate;
-//    private List<OrderDetailsDTO> orderDetails;
+    private List<OrderDetailsDTO> orderDetails;
 }
