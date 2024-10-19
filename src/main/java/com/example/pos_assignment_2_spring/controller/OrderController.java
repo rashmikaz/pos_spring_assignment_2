@@ -20,17 +20,17 @@ public class OrderController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> placeOrder(@RequestBody OrderRequestDTO orderRequestDTO){
-//        try {
-//            orderService.placeOrder(orderRequestDTO.getOrder(),orderRequestDTO.getOrderDetails());
-//            logger.info("Order successfully placed");
-//            return new ResponseEntity<>(HttpStatus.CREATED);
-//        }catch (DataPersistException e){
-//            logger.warn("Returning 400 Bad Request",e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }catch (Exception e){
-//            logger.error("Save order unsuccessful",e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
+        try {
+            orderService.placeOrder(orderRequestDTO.getOrder(),orderRequestDTO.getOrderDetails());
+            logger.info("Order successfully placed");
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (DataPersistException e){
+            logger.warn("Returning 400 Bad Request",e.getMessage());
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            logger.error("Save order unsuccessful",e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
     }
 }
